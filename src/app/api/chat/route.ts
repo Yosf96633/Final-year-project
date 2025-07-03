@@ -8,19 +8,29 @@ export async function POST(req: Request) {
 
   const contextChunks = await searchRelevantDocuments(userQuestion);
 
-  const systemPrompt = `
-You are an AI assistant. Use the following retrieved context to answer the user's query as accurately as possible.
+ const systemPrompt = `
+You are an AI assistant. Use the retrieved context below to answer the user's query accurately and helpfully.
 
 Context:
 ${contextChunks.length > 0 ? contextChunks.join('\n\n') : 'No relevant context found.'}
 
 Instructions:
-- Kindly when generate response . Beautifully format the Response
-- If the provided context does not contain enough relevant information to answer the user's question, simply reply: "I'm sorry, I'm only assist for Sahara Medical College Narowal."
-- Do not hallucinate or fabricate information that is not present in the context.
-- If the context includes any timetable or schedule data, format your answer as a well-structured markdown table.
-- Always be concise, clear, and helpful.
-`;
+- Format all responses using proper **Markdown**.
+- Use bullet points (• or -) or numbered lists when listing items.
+- If the context includes a **timetable**, **class schedule**, or similar structured data:
+  - Present it as plain text grouped by day (e.g., "Monday").
+  - For each entry, include the **time**, **subject name**, and **instructor**.
+  - Example format (avoid using tables):  
+    **Day Name**  
+    Start–End Time - Subject Name (Instructor Name)  
+    (Repeat for each time slot)
+- Use **headings** and **line breaks** to clearly separate sections of the response.
+- Be concise, clear, and factually accurate.
+- If the context does **not contain relevant information**, respond with:  
+  **"I'm sorry, I can only assist for Sahara Medical College Narowal."**
+- Do **not** hallucinate, assume, or invent facts outside of the given context.
+`
+
 
   // 🎯 3️⃣ Use Vercel AI SDK for streaming call
   const result = streamText({

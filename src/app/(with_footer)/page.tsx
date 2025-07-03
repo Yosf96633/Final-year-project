@@ -1,12 +1,8 @@
 "use client";
-
-import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import {
-  Moon,
-  Sun,
   ArrowRight,
   Star,
   Zap,
@@ -24,31 +20,8 @@ import {
 } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { useTheme } from "next-themes";
-
 export default function LandingPage() {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-    const handleScroll = () => {
-      if (window.scrollY > 10) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const toggleTheme = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
-  };
-
+ 
   const container = {
     hidden: { opacity: 0 },
     show: {
@@ -105,66 +78,9 @@ export default function LandingPage() {
 
   return (
     <div className="flex min-h-[100dvh] flex-col">
-      <header
-        className={`sticky top-0 z-50 px-6 w-full backdrop-blur-lg transition-all duration-300 ${
-          isScrolled ? "bg-background/80 shadow-sm" : "bg-transparent"
-        }`}
-      >
-        <div className="container flex h-16 items-center justify-between">
-          <div className="flex items-center gap-2 font-bold">
-            <div className="size-8 rounded-lg bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center text-primary-foreground">
-              C
-            </div>
-            <span>Cambot</span>
-          </div>
-          <nav className="flex gap-8">
-            <Link
-              href="/about"
-              className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-            >
-              About
-            </Link>
-            <Link
-              href="/chat"
-              className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-            >
-              Chat
-            </Link>
-          </nav>
-          <div className="hidden md:flex gap-4 items-center">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={toggleTheme}
-              className="rounded-full"
-            >
-              {mounted && theme === "dark" ? (
-                <Sun className="size-[18px]" />
-              ) : (
-                <Moon className="size-[18px]" />
-              )}
-              <span className="sr-only">Toggle theme</span>
-            </Button>
-          </div>
-          <div className="flex items-center gap-4 md:hidden">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={toggleTheme}
-              className="rounded-full"
-            >
-              {mounted && theme === "dark" ? (
-                <Sun className="size-[18px]" />
-              ) : (
-                <Moon className="size-[18px]" />
-              )}
-            </Button>
-          </div>
-        </div>
-      </header>
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="w-full py-20 overflow-hidden">
+        <section className="w-full overflow-hidden">
           <div className="container px-4 md:px-6 relative">
             <div className="absolute inset-0 -z-10 h-full w-full bg-white dark:bg-black bg-[linear-gradient(to_right,#f0f0f0_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f0_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#1f1f1f_1px,transparent_1px),linear-gradient(to_bottom,#1f1f1f_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_110%)]"></div>
 
@@ -333,15 +249,6 @@ export default function LandingPage() {
                 </motion.div>
               ))}
             </div>
-            <div className="w-full flex justify-center py-10">
-              <Image
-                src="/flow.png"
-                alt="flow diagram"
-                width={1000}
-                height={800}
-                className="h-auto max-w-full rounded-lg shadow-lg"
-              />
-            </div>
           </div>
         </section>
         {/* FAQ Section */}
@@ -426,15 +333,6 @@ export default function LandingPage() {
           </div>
         </section>
       </main>
-       <footer className="w-full border-t py-6 text-center text-sm">
-      <div className="container mx-auto px-4">
-        <p className="mb-2 font-semibold text-lg">
-            <span>Cambot</span>
-        </p>
-        <p className="mb-4">Your AI-powered campus query assistant.</p>
-        <p>© {new Date().getFullYear()} CampusAssist. All rights reserved.</p>
-      </div>
-    </footer>
     </div>
   );
 }
