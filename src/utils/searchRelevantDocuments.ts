@@ -1,5 +1,6 @@
 import { OpenAI } from "openai";
 import { createClient } from "@supabase/supabase-js";
+import { CoreMessage } from "ai";
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY! });
 const supabase = createClient(
@@ -8,13 +9,15 @@ const supabase = createClient(
 );
 
 export async function searchRelevantDocuments(
-  query: string
+  query:  string
 ): Promise<string[]> {
   // console.log('Query: ', query)
-  const embeddingResponse = await openai.embeddings.create({
-    model: "text-embedding-3-small",
-    input: query,
-  });
+ 
+const embeddingResponse = await openai.embeddings.create({
+  model: "text-embedding-3-small",
+  input: query, 
+});
+
   const [{ embedding }] = embeddingResponse.data;
   //  console.log('Embeddings: ', embedding)
   const { data, error } = await supabase.rpc("match_documents", {

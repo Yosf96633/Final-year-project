@@ -3,10 +3,27 @@ import { openai } from "@ai-sdk/openai";
 import { searchRelevantDocuments } from '@/utils/searchRelevantDocuments';
 
 export async function POST(req: Request) {
-  const { messages }: { messages: CoreMessage[] } = await req.json();
-  const userQuestion = messages[messages.length - 1]?.content;
+  
+ const { messages }: { messages: CoreMessage[] } = await req.json();
+const lastMessageContent = messages[messages.length - 1]?.content;
 
-  const contextChunks = await searchRelevantDocuments(userQuestion);
+// 🧠 Normalize content to string
+const userQuestion = typeof lastMessageContent === "string"
+  ? lastMessageContent
+  : Array.isArray(lastMessageContent)
+    ? lastMessageContent.map((part) =>
+        typeof part === "string"
+          ? part
+          : "text" in part
+            ? part.text
+            : ""
+      ).join(" ")
+    : "text" in (lastMessageContent || {})
+      ? (lastMessageContent as any).text
+      : "";
+
+const contextChunks = await searchRelevantDocuments(userQuestion);
+
 
  const systemPrompt = `
 You are an AI assistant. Use the retrieved context below to answer the user's query accurately and helpfully.
