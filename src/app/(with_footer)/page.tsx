@@ -118,10 +118,10 @@ export default function LandingPage() {
             >
               <div className="rounded-xl overflow-hidden shadow-2xl border border-border/40 bg-gradient-to-b from-background to-muted/20">
                 <Image
-                  src="https://cdn.dribbble.com/userupload/12302729/file/original-fa372845e394ee85bebe0389b9d86871.png?resize=1504x1128&vertical=center"
+                  src="/brain.png"
                   width={1280}
                   height={720}
-                  alt="SaaSify dashboard"
+                  alt="AI image"
                   className="w-full h-auto"
                   priority
                 />
