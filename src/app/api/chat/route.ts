@@ -23,8 +23,7 @@ const userQuestion = typeof lastMessageContent === "string"
       : "";
 
 const contextChunks = await searchRelevantDocuments(userQuestion);
-
-
+console.log("chucks:",contextChunks)
  const systemPrompt = `
 You are an AI assistant. Use the retrieved context below to answer the user's query accurately and helpfully.
 
