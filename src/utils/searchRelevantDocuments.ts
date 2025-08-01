@@ -22,8 +22,8 @@ const embeddingResponse = await openai.embeddings.create({
   //  console.log('Embeddings: ', embedding)
   const { data, error } = await supabase.rpc("match_documents", {
     query_embedding: embedding,
-    match_count: 5,
-    match_threshold: 0.05,
+    match_count: 8,
+    match_threshold: 0.65,
   });
   //  console.log('Data: ' , data)
   if (error) {

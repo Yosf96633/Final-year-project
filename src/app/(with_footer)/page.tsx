@@ -206,7 +206,7 @@ export default function LandingPage() {
                 How It Works
               </Badge>
               <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
-                Simple Steps to Smarter Campus Assistance
+                Simple Steps to Smarter Campus Assistance.
               </h2>
             </motion.div>
 
